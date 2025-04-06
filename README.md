@@ -1,10 +1,15 @@
+# Project Title
 
-#npm install @mui/icons-material
+## Screenshot
+![App Screenshot](./assets/img.png)
 
-#npm install react-router-dom @mui/material @emotion/react @emotion/styled
+## Installation
 
-#npm install @mui/material @emotion/react @emotion/styled
+To install the necessary dependencies, run the following commands:
 
-#npm install @mui/material @mui/styled-engine-sc styled-components
-
-#npm install @mui/icons-material
+```bash
+npm install @mui/icons-material
+npm install react-router-dom @mui/material @emotion/react @emotion/styled
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/material @mui/styled-engine-sc styled-components
+npm install @mui/icons-material
