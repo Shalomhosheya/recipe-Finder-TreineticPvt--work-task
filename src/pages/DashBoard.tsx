@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useThemeMode } from '../component/ThemeWrapper'; // 👈 import
+import { AccountCircle } from '@mui/icons-material';
+import SearchBar from '../component/SearchBar';
+import FilterSection from '../component/FilterSection';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { Brightness7 , Brightness4 } from '@mui/icons-material';
+
 import {
   Box,
   Typography,
@@ -10,11 +18,6 @@ import {
   Button,
   IconButton
 } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
-import SearchBar from '../component/SearchBar';
-import FilterSection from '../component/FilterSection';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 interface Recipe {
   idMeal: string;
@@ -37,6 +40,8 @@ const Dashboard = ({ customRecipes }: DashboardProps) => {
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const navigate = useNavigate();
+    const { toggleColorMode, mode } = useThemeMode(); // 👈 inside Dashboard component
+
 
   const fetchRecipes = async (query: string) => {
     try {
@@ -63,22 +68,20 @@ const Dashboard = ({ customRecipes }: DashboardProps) => {
   return (
     <Box sx={{ padding: '2rem' }}>
       {/* Top Bar */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="h4">🍽️ Recipe Finder</Typography>
-        <IconButton onClick={() => navigate('/login')} color="primary">
-          <AccountCircle fontSize="large" />
-        </IconButton>
-      </Box>
 
-     {/* Top Bar */}
-<Box
-  display="flex"
-  justifyContent="space-between"
-  alignItems="center"
-  flexWrap="wrap"
-  mb={2}
->
+...
+
+{/* Top Bar with theme toggle and logout */}
+<Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+  <Typography variant="h4">🍽️ Recipe Finder</Typography>
+
   <Box display="flex" alignItems="center" gap={2}>
+    <IconButton onClick={toggleColorMode} color="inherit">
+      {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+    </IconButton>
+    <IconButton onClick={() => navigate('/login')} color="primary">
+      <AccountCircle fontSize="large" />
+    </IconButton>
     <Button
       variant="contained"
       color="secondary"
@@ -101,8 +104,8 @@ const Dashboard = ({ customRecipes }: DashboardProps) => {
       Logout
     </Button>
   </Box>
-
 </Box>
+
 
 
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />

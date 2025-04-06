@@ -1,14 +1,12 @@
-import { AuthProvider } from './context/AuthProvider'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import axios from 'axios';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import ThemeWrapper from './component/ThemeWrapper';
 
-axios.defaults.baseURL = 'https://www.themealdb.com/api/json/v1/1';
-
-createRoot(document.getElementById('root')!).render(
-  <AuthProvider>
-    <App />
-  </AuthProvider>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ThemeWrapper>
+      <App />
+    </ThemeWrapper>
+  </React.StrictMode>
 );
-
