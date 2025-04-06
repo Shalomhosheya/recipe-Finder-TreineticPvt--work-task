@@ -4,7 +4,12 @@ import { useParams } from 'react-router-dom';
 import { Box, Typography, Button, CardMedia } from '@mui/material';
 import axios from 'axios';
 
-const RecipeDetails = () => {
+
+interface RecipeDetailsProps {
+  customRecipes: Recipe[];
+}
+
+const RecipeDetails: React.FC<RecipeDetailsProps> = ({ customRecipes }) =>  {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 

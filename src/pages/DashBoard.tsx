@@ -33,8 +33,7 @@ interface DashboardProps {
   customRecipes: Recipe[];
   onAdd: (newRecipe: Recipe) => void;
 }
-
-const Dashboard = ({ customRecipes }: DashboardProps) => {
+const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
   const [searchQuery, setSearchQuery] = useState('');
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);

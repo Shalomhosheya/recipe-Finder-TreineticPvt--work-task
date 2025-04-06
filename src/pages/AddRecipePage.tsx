@@ -4,7 +4,12 @@ import { Box, Typography, Button } from '@mui/material';
 import AddRecipe from '../component/AddRecipe';
 import { useNavigate } from 'react-router-dom';
 
-const AddRecipePage = ({ onAdd }) => {
+interface AddRecipePageProps {
+  onAdd: (newRecipe: Recipe) => void;
+}
+
+
+const AddRecipePage: React.FC<AddRecipePageProps> = ({ onAdd }) => {
   const navigate = useNavigate();
 
   const handleAddRecipe = (newRecipe) => {
