@@ -1,7 +1,10 @@
 # Project Title
 
-## Screenshot
+## Screenshot - dark mode
 ![App Screenshot](./src/assets/img.png)
+
+## Screenshot - light mode
+![App Screenshot](./src/assets/img2.png)
 
 ## Installation
 
