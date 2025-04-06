@@ -26,7 +26,7 @@ const App = () => {
     <Router>
       <Box sx={{ padding: '2rem' }}>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard customRecipes={customRecipes} onAdd={handleAddRecipe} />} />
+          <Route path="/" element={<Dashboard customRecipes={customRecipes} onAdd={handleAddRecipe} />} />
           <Route path="/add-recipe" element={<AddRecipePage onAdd={handleAddRecipe} />} />
           <Route path="/recipe/:id" element={<RecipeDetails customRecipes={customRecipes} />} />
         </Routes>

@@ -9,7 +9,7 @@ const AddRecipePage = ({ onAdd }) => {
 
   const handleAddRecipe = (newRecipe) => {
     onAdd(newRecipe); // Pass the new recipe to the parent Dashboard component
-    navigate('/dashboard'); // Navigate back to the dashboard after adding the recipe
+    navigate('/'); // Navigate back to the dashboard after adding the recipe
   };
 
   return (
@@ -18,7 +18,7 @@ const AddRecipePage = ({ onAdd }) => {
         Add a New Recipe
       </Typography>
       <AddRecipe onAdd={handleAddRecipe} />
-      <Button sx={{ mt: 2 }} variant="contained" onClick={() => navigate('/dashboard')}>
+      <Button sx={{ mt: 2 }} variant="contained" onClick={() => navigate('/')}>
         Go to Dashboard
       </Button>
     </Box>
