@@ -1,25 +1,31 @@
-// Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, Card, CardMedia, CardContent, CircularProgress, Button } from '@mui/material';
 import SearchBar from '../component/SearchBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AddRecipe from '../component/AddRecipe';
 
-const Dashboard = () => {
+interface Recipe {
+  idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+  strInstructions: string;
+  strIngredient1: string;
+  strCategory?: string;
+  strArea?: string;
+}
+
+interface DashboardProps {
+  customRecipes: Recipe[];
+  onAdd: (newRecipe: Recipe) => void;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
-  const [customRecipes, setCustomRecipes] = useState([]);
-
-  const handleAddRecipe = (newRecipe) => {
-    setCustomRecipes([...customRecipes, newRecipe]);
-  };
-
-  const allRecipes = [...customRecipes, ...recipes];
   const navigate = useNavigate();
 
-  const fetchRecipes = async (query) => {
+  const fetchRecipes = async (query: string) => {
     try {
       setLoading(true);
       const res = await axios.get(`/search.php?s=${query}`);
@@ -34,6 +40,8 @@ const Dashboard = () => {
   useEffect(() => {
     fetchRecipes(searchQuery);
   }, [searchQuery]);
+
+  const allRecipes = [...customRecipes, ...recipes]; // Combine custom recipes with fetched ones
 
   return (
     <Box sx={{ padding: '2rem' }}>

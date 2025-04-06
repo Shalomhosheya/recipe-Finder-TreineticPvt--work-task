@@ -18,7 +18,7 @@ const AddRecipePage = ({ onAdd }) => {
         Add a New Recipe
       </Typography>
       <AddRecipe onAdd={handleAddRecipe} />
-      <Button sx={{ mt: 2 }} variant="contained" onClick={() => navigate('/')}>
+      <Button sx={{ mt: 2 }} variant="contained" onClick={() => navigate('/dashboard')}>
         Go to Dashboard
       </Button>
     </Box>

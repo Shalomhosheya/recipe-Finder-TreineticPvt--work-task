@@ -2,24 +2,35 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import AddRecipePage from './pages/AddRecipePage';
-import RecipeDetail from './pages/RecipeDetail';
-import Recipe from './data/Recipe';
+import RecipeDetails from './pages/RecipeDetail';
+import { Box } from '@mui/material';
+
+interface Recipe {
+  idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+  strInstructions: string;
+  strIngredient1: string;
+  strCategory?: string;
+  strArea?: string;
+}
 
 const App = () => {
-  // Define state with the customRecipes type as an array of Recipe objects
   const [customRecipes, setCustomRecipes] = useState<Recipe[]>([]);
 
   const handleAddRecipe = (newRecipe: Recipe) => {
-    setCustomRecipes([...customRecipes, newRecipe]);
+    setCustomRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
   };
 
   return (
     <Router>
+      <Box sx={{ padding: '2rem' }}>
         <Routes>
-        <Route path="/" element={<Dashboard onAdd={handleAddRecipe} />} />
-        <Route path="/add-recipe" element={<AddRecipePage onAdd={handleAddRecipe} />} />
-        <Route path="/recipe/:id" element={<RecipeDetail />} /> {/* Add the route for recipe details */}
-      </Routes>
+          <Route path="/dashboard" element={<Dashboard customRecipes={customRecipes} onAdd={handleAddRecipe} />} />
+          <Route path="/add-recipe" element={<AddRecipePage onAdd={handleAddRecipe} />} />
+          <Route path="/recipe/:id" element={<RecipeDetails customRecipes={customRecipes} />} />
+        </Routes>
+      </Box>
     </Router>
   );
 };
