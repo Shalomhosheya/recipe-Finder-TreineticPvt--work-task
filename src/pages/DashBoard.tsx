@@ -70,6 +70,41 @@ const Dashboard = ({ customRecipes }: DashboardProps) => {
         </IconButton>
       </Box>
 
+     {/* Top Bar */}
+<Box
+  display="flex"
+  justifyContent="space-between"
+  alignItems="center"
+  flexWrap="wrap"
+  mb={2}
+>
+  <Box display="flex" alignItems="center" gap={2}>
+    <Button
+      variant="contained"
+      color="secondary"
+      sx={{
+        fontWeight: 'bold',
+        textTransform: 'none',
+        borderRadius: '20px',
+        px: 3,
+        py: 1,
+        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+        '&:hover': {
+          backgroundColor: '#9c27b0',
+        },
+      }}
+      onClick={() => {
+        localStorage.removeItem('user');
+        navigate('/login');
+      }}
+    >
+      Logout
+    </Button>
+  </Box>
+
+</Box>
+
+
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <FilterSection selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
 

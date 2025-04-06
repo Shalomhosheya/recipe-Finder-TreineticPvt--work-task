@@ -5,7 +5,7 @@ import {
   Button,
   Typography,
   Paper,
-  Alert
+  Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,15 +18,14 @@ const LoginPage = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Dummy user
     const dummyUser = {
       email: 'user@example.com',
-      password: 'password123',
+      password: '123',
     };
 
     if (email === dummyUser.email && password === dummyUser.password) {
-      localStorage.setItem('user', JSON.stringify({ email }));
-      navigate('/dashboard');
+      localStorage.setItem('user', JSON.stringify({ email, password }));
+      navigate('/');
     } else {
       setError('Invalid email or password');
     }
@@ -45,7 +44,7 @@ const LoginPage = () => {
           🔐 Login
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
 
         <form onSubmit={handleLogin}>
           <TextField
@@ -65,12 +64,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            sx={{ mt: 2 }}
-          >
+          <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
             Login
           </Button>
         </form>
