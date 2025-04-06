@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, Card, CardMedia, CardContent, CircularProgress, Button } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  CircularProgress,
+  Button,
+  IconButton
+} from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
 import SearchBar from '../component/SearchBar';
+import FilterSection from '../component/FilterSection';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,16 +31,14 @@ interface DashboardProps {
   onAdd: (newRecipe: Recipe) => void;
 }
 
-import FilterSection from '../component/FilterSection'; // Import it
-
-const Dashboard = ({ customRecipes }) => {
+const Dashboard = ({ customRecipes }: DashboardProps) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const navigate = useNavigate();
 
-  const fetchRecipes = async (query) => {
+  const fetchRecipes = async (query: string) => {
     try {
       setLoading(true);
       const res = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
@@ -44,19 +54,21 @@ const Dashboard = ({ customRecipes }) => {
     fetchRecipes(searchQuery);
   }, [searchQuery]);
 
-  // Combine custom and API recipes
   const allRecipes = [...customRecipes, ...recipes];
 
-  // Filter based on category
   const filteredRecipes = selectedCategory
     ? allRecipes.filter((r) => r.strCategory === selectedCategory)
     : allRecipes;
 
   return (
     <Box sx={{ padding: '2rem' }}>
-      <Typography variant="h4" gutterBottom>
-        🍽️ Recipe Finder
-      </Typography>
+      {/* Top Bar */}
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="h4">🍽️ Recipe Finder</Typography>
+        <IconButton onClick={() => navigate('/login')} color="primary">
+          <AccountCircle fontSize="large" />
+        </IconButton>
+      </Box>
 
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <FilterSection selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -83,6 +95,11 @@ const Dashboard = ({ customRecipes }) => {
           )}
         </Grid>
       )}
+
+      <br />
+      <Button variant="contained" onClick={() => navigate('/add-recipe')}>
+        Add Recipe
+      </Button>
     </Box>
   );
 };

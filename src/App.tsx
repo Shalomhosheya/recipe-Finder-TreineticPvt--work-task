@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import AddRecipePage from './pages/AddRecipePage';
 import RecipeDetails from './pages/RecipeDetail';
+import LoginPage from './pages/LoginPage';
 import { Box } from '@mui/material';
 
 interface Recipe {
@@ -29,6 +30,8 @@ const App = () => {
           <Route path="/" element={<Dashboard customRecipes={customRecipes} onAdd={handleAddRecipe} />} />
           <Route path="/add-recipe" element={<AddRecipePage onAdd={handleAddRecipe} />} />
           <Route path="/recipe/:id" element={<RecipeDetails customRecipes={customRecipes} />} />
+          <Route path="/login" element={<LoginPage />} />
+
         </Routes>
       </Box>
     </Router>
