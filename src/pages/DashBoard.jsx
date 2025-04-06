@@ -1,18 +1,29 @@
+// Dashboard.jsx
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, Card, CardMedia, CardContent, CircularProgress } from '@mui/material';
+import { Box, Typography, Grid, Card, CardMedia, CardContent, CircularProgress, Button } from '@mui/material';
 import SearchBar from '../component/SearchBar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import AddRecipe from '../component/AddRecipe';
 
 const Dashboard = () => {
-  const [searchQuery, setSearchQuery] = useState('Arrabiata');
+  const [searchQuery, setSearchQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [customRecipes, setCustomRecipes] = useState([]);
+
+  const handleAddRecipe = (newRecipe) => {
+    setCustomRecipes([...customRecipes, newRecipe]);
+  };
+
+  const allRecipes = [...customRecipes, ...recipes];
+  const navigate = useNavigate();
 
   const fetchRecipes = async (query) => {
     try {
       setLoading(true);
       const res = await axios.get(`/search.php?s=${query}`);
-      setRecipes(res.data.meals || []); // If no meals, fallback to empty array
+      setRecipes(res.data.meals || []);
     } catch (error) {
       console.error('Error fetching recipes:', error);
     } finally {
@@ -36,25 +47,20 @@ const Dashboard = () => {
         <CircularProgress />
       ) : (
         <Grid container spacing={3}>
-          {recipes.length > 0 ? (
-            recipes.map((recipe) => (
+          {allRecipes.length > 0 ? (
+            allRecipes.map((recipe) => (
               <Grid item key={recipe.idMeal} xs={12} sm={6} md={4}>
-                <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={recipe.strMealThumb}
-                    alt={recipe.strMeal}
-                  />
+                <Card sx={{ cursor: 'pointer' }} onClick={() => navigate(`/recipe/${recipe.idMeal}`)}>
+                  <CardMedia component="img" height="180" image={recipe.strMealThumb} alt={recipe.strMeal} />
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
                       {recipe.strMeal}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Category: {recipe.strCategory}
+                      Category: {recipe.strCategory || 'Custom'}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Area: {recipe.strArea}
+                      Area: {recipe.strArea || 'N/A'}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -65,6 +71,10 @@ const Dashboard = () => {
           )}
         </Grid>
       )}
+
+      <Button variant="contained" sx={{ mt: 4 }} onClick={() => navigate('/add-recipe')}>
+        Add New Recipe
+      </Button>
     </Box>
   );
 };
