@@ -1,7 +1,7 @@
 # Project Title
 
 ## Screenshot
-![App Screenshot](./assets/img.png)
+![App Screenshot](./src/assets/img.png)
 
 ## Installation
 
