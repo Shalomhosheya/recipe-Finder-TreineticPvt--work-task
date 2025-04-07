@@ -38,8 +38,10 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem('user'));
+
   const navigate = useNavigate();
-    const { toggleColorMode, mode } = useThemeMode(); // 👈 inside Dashboard component
+    const { toggleColorMode, mode } = useThemeMode(); 
 
   const handleRemoveFavorite = (idToRemove: string) => {
       const updatedFavorites = favorites.filter((recipe) => recipe.idMeal !== idToRemove);
@@ -63,6 +65,11 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
     fetchRecipes(searchQuery);
   }, [searchQuery]);
 
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    setIsLoggedIn(!!user);
+  }, []);
+  
   const allRecipes = [...customRecipes, ...recipes];
 
   const filteredRecipes = selectedCategory
@@ -83,7 +90,7 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
       };
     
       window.addEventListener("favoritesUpdated", updateFavorites);
-      updateFavorites(); // initial load
+      updateFavorites(); 
     
       return () => window.removeEventListener("favoritesUpdated", updateFavorites);
     }, []);
@@ -92,7 +99,6 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
     <Box sx={{ padding: '2rem' }}>
    
 
-{/* Top Bar with theme toggle and logout */}
 <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
   <Typography variant="h4">🍽️ Recipe Finder</Typography>
 
@@ -103,27 +109,31 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
     <IconButton onClick={() => navigate('/login')} color="primary">
       <AccountCircle fontSize="large" />
     </IconButton>
-    <Button
-      variant="contained"
-      color="secondary"
-      sx={{
-        fontWeight: 'bold',
-        textTransform: 'none',
-        borderRadius: '20px',
-        px: 3,
-        py: 1,
-        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-        '&:hover': {
-          backgroundColor: '#9c27b0',
-        },
-      }}
-      onClick={() => {
-        localStorage.removeItem('user');
-        navigate('/login');
-      }}
-    >
-      Logout
-    </Button>
+    {isLoggedIn && (
+  <Button
+    variant="contained"
+    color="secondary"
+    sx={{
+      fontWeight: 'bold',
+      textTransform: 'none',
+      borderRadius: '20px',
+      px: 3,
+      py: 1,
+      boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+      '&:hover': {
+        backgroundColor: '#9c27b0',
+      },
+    }}
+    onClick={() => {
+      localStorage.removeItem('user');
+      setIsLoggedIn(false);
+      navigate('/');
+    }}
+  >
+    Logout
+  </Button>
+)}
+
   </Box>
 </Box>
 

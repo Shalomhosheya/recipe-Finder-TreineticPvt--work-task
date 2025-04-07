@@ -1,20 +1,36 @@
-// AddRecipePage.jsx
-import React, { useState } from 'react';
+// AddRecipePage.tsx
+import React, { useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import AddRecipe from '../component/AddRecipe';
 import { useNavigate } from 'react-router-dom';
+
+interface Recipe {
+  idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+  strInstructions: string;
+  strIngredient1: string;
+  strCategory?: string;
+  strArea?: string;
+}
 
 interface AddRecipePageProps {
   onAdd: (newRecipe: Recipe) => void;
 }
 
-
 const AddRecipePage: React.FC<AddRecipePageProps> = ({ onAdd }) => {
   const navigate = useNavigate();
 
-  const handleAddRecipe = (newRecipe) => {
-    onAdd(newRecipe); // Pass the new recipe to the parent Dashboard component
-    navigate('/'); // Navigate back to the dashboard after adding the recipe
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  const handleAddRecipe = (newRecipe: Recipe) => {
+    onAdd(newRecipe);
+    navigate('/');
   };
 
   return (

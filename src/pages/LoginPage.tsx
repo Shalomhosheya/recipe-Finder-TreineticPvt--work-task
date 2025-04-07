@@ -26,6 +26,7 @@ const LoginPage = () => {
     if (email === dummyUser.email && password === dummyUser.password) {
       localStorage.setItem('user', JSON.stringify({ email, password }));
       navigate('/');
+      
     } else {
       setError('Invalid email or password');
     }
