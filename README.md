@@ -1,18 +1,26 @@
-# Project Title
+# Recipe Finder
 
-## Screenshot - dark mode
-![App Screenshot](./src/assets/img.png)
+A simple and responsive Recipe Finder web app with theme toggling, search, filtering, and favorites features.
 
-## Screenshot - light mode
-![App Screenshot](./src/assets/img2.png)
+---
 
-## Installation
+## 🔥 Screenshots
 
-To install the necessary dependencies, run the following commands:
+### 🌑 Dark Mode
+![Dark Mode](./src/assets/img.png)
 
-```bash
-npm install @mui/icons-material
-npm install react-router-dom @mui/material @emotion/react @emotion/styled
-npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/material @mui/styled-engine-sc styled-components
-npm install @mui/icons-material
+### ☀️ Light Mode
+![Light Mode](./src/assets/img2.png)
+
+---
+
+## 🎥 Demo Video
+
+> ⚠️ GitHub does **not support** direct video embedding or playback from `.mp4` files in markdown. You have two options:
+
+### ✅ Option 1: Use HTML to embed local video (only works in some markdown renderers)
+```html
+<video width="100%" controls>
+  <source src="./src/assets/0407.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
