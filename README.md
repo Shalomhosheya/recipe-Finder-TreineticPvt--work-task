@@ -17,7 +17,5 @@ A simple and responsive Recipe Finder web app with theme toggling, search, filte
 ## 🎥 Demo Video
 
 ```html
-<video width="100%" controls>
-  <source src="./src/assets/0407.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<There is an Video in src/assets = which Demostrate Go check it put>
+file name - 0407(2)4.mp4
