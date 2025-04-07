@@ -16,9 +16,6 @@ A simple and responsive Recipe Finder web app with theme toggling, search, filte
 
 ## 🎥 Demo Video
 
-> ⚠️ GitHub does **not support** direct video embedding or playback from `.mp4` files in markdown. You have two options:
-
-### ✅ Option 1: Use HTML to embed local video (only works in some markdown renderers)
 ```html
 <video width="100%" controls>
   <source src="./src/assets/0407.mp4" type="video/mp4">
