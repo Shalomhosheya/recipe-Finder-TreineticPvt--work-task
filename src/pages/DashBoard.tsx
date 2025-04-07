@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useThemeMode } from '../component/ThemeWrapper'; // 👈 import
 import { AccountCircle } from '@mui/icons-material';
-import SearchBar from '../component/SearchBar';
+import SearchBar from '../component/Searchbar';
 import FilterSection from '../component/FilterSection';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -41,7 +41,12 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
   const navigate = useNavigate();
     const { toggleColorMode, mode } = useThemeMode(); // 👈 inside Dashboard component
 
-
+  const handleRemoveFavorite = (idToRemove: string) => {
+      const updatedFavorites = favorites.filter((recipe) => recipe.idMeal !== idToRemove);
+      setFavorites(updatedFavorites);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    };
+    
   const fetchRecipes = async (query: string) => {
     try {
       setLoading(true);
@@ -63,12 +68,29 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
   const filteredRecipes = selectedCategory
     ? allRecipes.filter((r) => r.strCategory === selectedCategory)
     : allRecipes;
+  
+  const [favorites, setFavorites] = useState<Recipe[]>([]);
 
+    useEffect(() => {
+      const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      setFavorites(storedFavorites);
+    }, []);
+    
+    useEffect(() => {
+      const updateFavorites = () => {
+        const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        setFavorites(storedFavorites);
+      };
+    
+      window.addEventListener("favoritesUpdated", updateFavorites);
+      updateFavorites(); // initial load
+    
+      return () => window.removeEventListener("favoritesUpdated", updateFavorites);
+    }, []);
+    
   return (
     <Box sx={{ padding: '2rem' }}>
-      {/* Top Bar */}
-
-...
+   
 
 {/* Top Bar with theme toggle and logout */}
 <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -105,6 +127,41 @@ const Dashboard: React.FC<DashboardProps> = ({ customRecipes, onAdd }) =>  {
   </Box>
 </Box>
 
+{favorites.length > 0 && (
+  <Box sx={{ mt: 4 }}>
+    <Typography variant="h5" gutterBottom>❤️ Your Favorites</Typography>
+    <Grid container spacing={3}>
+      {favorites.map((recipe) => (
+        <Grid item key={recipe.idMeal} xs={12} sm={6} md={4}>
+          <Card sx={{ cursor: 'pointer', position: 'relative' }}>
+            <CardMedia
+              component="img"
+              height="180"
+              image={recipe.strMealThumb}
+              alt={recipe.strMeal}
+              onClick={() => navigate(`/recipe/${recipe.idMeal}`)}
+            />
+            <CardContent>
+              <Typography variant="h6">{recipe.strMeal}</Typography>
+              <Typography variant="body2">Category: {recipe.strCategory || 'Custom'}</Typography>
+              <Typography variant="body2">Area: {recipe.strArea || 'N/A'}</Typography>
+
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                sx={{ mt: 1 }}
+                onClick={() => handleRemoveFavorite(recipe.idMeal)}
+              >
+                Remove ❌
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
+)}
 
 
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
