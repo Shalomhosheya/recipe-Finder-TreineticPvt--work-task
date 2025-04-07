@@ -24,6 +24,7 @@ A modern, responsive Recipe Finder web app built with **React** and **TypeScript
 
 > You can open the video manually to view a walkthrough of the app functionality.
 
+>login email - user@example.com , password - 123
 ---
 
 ## 📸 Screenshots
